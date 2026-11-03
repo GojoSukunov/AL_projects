@@ -1,0 +1,399 @@
+
+<!DOCTYPE html>
+<html lang="ru">
+<link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/styles/github-dark.min.css"
+>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/highlight.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/languages/python.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/languages/javascript.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/languages/java.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/languages/sql.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/languages/cpp.min.js"></script>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MY AI LAB</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+
+<aside class="sidebar">
+    <h2>MY AI LAB</h2>
+
+    <nav>
+        <a href="#" class="active" data-page="home">⌂ Главная</a>
+        <a href="#" data-page="projects">▦ Мои проекты</a>
+        <a href="#" data-page="cifar">▧ CIFAR-10</a>
+        <a href="#" data-page="code">⌨ Code Studio</a>
+    </nav>
+
+    <div class="sidebar-bottom">Personal AI Laboratory</div>
+</aside>
+
+<main>
+    <header>
+        <div>
+            <h1 id="page-title">Главная панель</h1>
+            <p id="page-subtitle">Добро пожаловать в MY AI LAB</p>
+        </div>
+
+        <div class="status">
+            <span class="status-dot"></span>
+            Система активна
+        </div>
+    </header>
+
+    <!-- Главная -->
+    <section id="home-page" class="page">
+        <section class="stats">
+            <div class="card">
+                <span>Мои проекты</span>
+                <h2>0</h2>
+                <p>Сохранённые проекты</p>
+            </div>
+
+            <div class="card">
+                <span>Сохранённый код</span>
+                <h2>0</h2>
+                <p>Программы и задания</p>
+            </div>
+        </section>
+
+        <section class="welcome">
+            <div>
+                <span class="tag">PERSONAL AI WORKSPACE</span>
+                <h2>Твоя лаборатория искусственного интеллекта</h2>
+                <p>
+                    Храни проекты, работай с нейронными сетями,
+                    распознавай изображения и сохраняй свой код
+                    в одном месте.
+                </p>
+            </div>
+            <div class="welcome-icon">✦</div>
+        </section>
+
+        <section class="section">
+            <h2>Инструменты лаборатории</h2>
+            <div class="tools">
+                <div class="tool-card" data-open="cifar">
+                    <h3>🖼 CIFAR-10</h3>
+                    <p>Распознавание изображений нейросетью.</p>
+                </div>
+
+                <div class="tool-card" data-open="mnist">
+                    <h3>✍ MNIST</h3>
+                    <p>Распознавание рукописных цифр.</p>
+                </div>
+
+                <div class="tool-card" data-open="code">
+                    <h3>💻 Code Studio</h3>
+                    <p>Архив программ и исходного кода.</p>
+                </div>
+            </div>
+        </section>
+    </section>
+
+    <!-- CIFAR-10 -->
+    <section id="cifar-page" class="page hidden">
+        <div class="welcome">
+            <div>
+                <span class="tag">IMAGE CLASSIFICATION</span>
+                <h2>Распознавание изображений</h2>
+                <p>
+                    Загрузи изображение, и нейросеть CIFAR-10
+                    попробует определить, что на нём изображено.
+                </p>
+            </div>
+            <div class="welcome-icon">◈</div>
+        </div>
+
+        <div class="upload-card">
+            <h2>Загрузка изображения</h2>
+            <p>Поддерживаются JPG, PNG и WEBP. Максимум 10 МБ.</p>
+
+            <label class="upload-area" for="image-input">
+                <div class="upload-icon">↑</div>
+                <h3>Выбери изображение</h3>
+                <p>Нажми здесь, чтобы выбрать файл</p>
+                <input
+                    type="file"
+                    id="image-input"
+                    accept="image/jpeg,image/png,image/webp"
+                    hidden
+                >
+            </label>
+
+            <div id="preview-container" class="preview-container hidden">
+                <img id="image-preview" alt="Предпросмотр">
+                <p id="file-name"></p>
+            </div>
+
+            <button id="predict-button" disabled>
+                Распознать изображение
+            </button>
+
+            <p id="loading" class="loading hidden">
+                Нейросеть анализирует изображение...
+            </p>
+
+            <p id="error-message" class="error-message hidden"></p>
+        </div>
+
+        <div id="result-container" class="result-card hidden">
+            <span class="tag">PREDICTION RESULT</span>
+            <h2>Результат распознавания</h2>
+
+            <div class="prediction">
+                <div>
+                    <p>Предполагаемый класс</p>
+                    <h1 id="prediction-name">—</h1>
+                </div>
+                <div>
+                    <p>Уверенность модели</p>
+                    <h1 id="confidence">0%</h1>
+                </div>
+            </div>
+
+            <h3>Вероятности классов</h3>
+            <div id="probability-list"></div>
+        </div>
+    </section>
+
+<!-- Мои проекты -->
+<section id="projects-page" class="page hidden">
+
+    <div class="welcome">
+        <div>
+            <span class="tag">MY PORTFOLIO</span>
+            <h2>Мои проекты</h2>
+            <p>Все твои работы и результаты в одном месте.</p>
+        </div>
+        <div class="welcome-icon">▦</div>
+    </div>
+
+
+<div class="upload-card">
+    <h2>Сохранённые проекты</h2>
+    <p>Выбери проект, чтобы посмотреть подробности.</p>
+
+    <button id="create-project-button" class="create-button">
+        + Создать проект
+    </button>
+
+    <form id="create-project-form" class="create-project-form hidden">
+        <h3>Новый проект</h3>
+
+        <label for="project-title">Название проекта</label>
+        <input
+            type="text"
+            id="project-title"
+            placeholder="Например, Нейронная сеть"
+            maxlength="150"
+            required
+        >
+
+        <label for="project-description">Описание проекта</label>
+        <textarea
+            id="project-description"
+            placeholder="Расскажи о своём проекте..."
+            rows="4"
+            maxlength="2000"
+        ></textarea>
+
+        <div class="form-buttons">
+            <button type="submit" class="create-button">
+                Сохранить проект
+            </button>
+
+            <button type="button" id="cancel-project" class="back-button">
+                Отмена
+            </button>
+        </div>
+
+        <p id="create-project-error" class="error-message hidden"></p>
+    </form>
+
+    <div id="projects-list" class="projects-list">
+        <p>Загрузка проектов...</p>
+    </div>
+
+    <p id="projects-error" class="error-message hidden"></p>
+</div>
+
+
+    <div id="project-detail" class="upload-card hidden">
+        <button id="back-projects" class="back-button">
+            ← Назад к проектам
+        </button>
+
+        <span class="tag">PROJECT DETAILS</span>
+        <h2 id="detail-title"></h2>
+        <p id="detail-description"></p>
+
+        <div id="detail-result"></div>
+
+<div class="project-files-section">
+    <h3>Файлы и результаты проекта</h3>
+
+    <form id="upload-project-file-form">
+        <label for="project-file-input" class="upload-area">
+            <div class="upload-icon">↑</div>
+            <h3>Загрузить файл</h3>
+            <p>Изображения, PDF, документы и архивы. До 20 МБ.</p>
+        </label>
+
+        <input
+            type="file"
+            id="project-file-input"
+            accept=".jpg,.jpeg,.png,.webp,.gif,.pdf,.txt,.csv,.doc,.docx,.xls,.xlsx,.ppt,.pptx,.zip"
+            hidden
+        >
+
+        <button type="submit" id="upload-project-file-button" disabled>
+            Загрузить в проект
+        </button>
+
+        <p id="upload-file-error" class="error-message hidden"></p>
+    </form>
+
+    <div id="project-files-list">
+        <p>Загружаем файлы...</p>
+    </div>
+</div>
+
+    </div>
+
+</section>
+
+<!-- CODE STUDIO -->
+<section id="code-page" class="page hidden">
+
+    <div class="welcome">
+        <div>
+            <span class="tag">MY CODE ARCHIVE</span>
+            <h2>Code Studio</h2>
+            <p>Твоя личная коллекция программ, исходников и учебных заданий.</p>
+        </div>
+        <div class="welcome-icon">⌨</div>
+    </div>
+
+    <!-- Список программ -->
+    <div id="code-list-section" class="upload-card">
+        <h2>Мои программы</h2>
+        <p>Сохраняй исходный код и связывай его со своими проектами.</p>
+
+        <button id="add-code-button" class="create-button">
+            + Добавить программу
+        </button>
+
+        <div id="code-list" class="projects-list">
+            <p>Загрузка программ...</p>
+        </div>
+
+        <p id="code-list-error" class="error-message hidden"></p>
+    </div>
+
+    <!-- Форма добавления и редактирования -->
+    <div id="code-form-section" class="upload-card hidden">
+
+        <button id="cancel-code-form" class="back-button">
+            ← Назад к программам
+        </button>
+
+        <h2 id="code-form-title">Новая программа</h2>
+
+        <form id="code-form">
+
+            <label for="code-project">Связанный проект</label>
+            <select id="code-project" required>
+                <option value="">Выбери проект</option>
+            </select>
+
+            <label for="code-language">Язык программирования</label>
+            <select id="code-language">
+                <option value="python">Python</option>
+                <option value="java">Java</option>
+                <option value="javascript">JavaScript</option>
+                <option value="html">HTML</option>
+                <option value="css">CSS</option>
+                <option value="cpp">C++</option>
+                <option value="c">C</option>
+                <option value="sql">SQL</option>
+                <option value="other">Другой</option>
+            </select>
+
+            <label for="code-content">Исходный код</label>
+            <textarea
+                id="code-content"
+                placeholder="Вставь сюда исходный код..."
+                rows="15"
+                required
+                spellcheck="false"
+            ></textarea>
+
+            <div class="form-buttons">
+                <button type="submit" class="create-button">
+                    Сохранить программу
+                </button>
+
+                <button type="button" id="cancel-code-button" class="back-button">
+                    Отмена
+                </button>
+            </div>
+
+            <p id="code-form-error" class="error-message hidden"></p>
+        </form>
+    </div>
+
+    <!-- Просмотр программы -->
+    <div id="code-detail-section" class="upload-card hidden">
+
+        <button id="back-code-list" class="back-button">
+            ← Назад к программам
+        </button>
+
+        <span class="tag">SOURCE CODE</span>
+
+        <h2 id="code-detail-title"></h2>
+
+        <div id="code-detail-info"></div>
+
+        <div class="form-buttons">
+            <button id="copy-code-button" class="create-button">
+                Копировать код
+            </button>
+
+            <button id="edit-code-button" class="back-button">
+                Редактировать
+            </button>
+
+            <button id="delete-code-button" class="back-button">
+                Удалить
+            </button>
+        </div>
+
+        <pre class="code-preview"><code id="code-detail-content"></code></pre>
+
+        <p id="code-detail-error" class="error-message hidden"></p>
+    </div>
+
+</section>
+
+
+<!-- Остальные разделы -->
+<section id="other-page" class="page hidden">
+    <div class="upload-card">
+        <h2 id="other-title">Раздел</h2>
+        <p>Этот раздел находится в разработке.</p>
+    </div>
+</section>
+
+</main>
+
+<script src="/static/script.js"></script>
+</body>
+</html>

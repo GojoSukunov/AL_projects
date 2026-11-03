@@ -1,0 +1,1313 @@
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: #0b1020;
+    color: #f1f5f9;
+    display: flex;
+    min-height: 100vh;
+}
+
+.sidebar {
+    width: 250px;
+    background: #11182b;
+    padding: 30px 20px;
+    border-right: 1px solid #263149;
+    display: flex;
+    flex-direction: column;
+}
+
+.sidebar h2 {
+    color: #8b9cff;
+    margin-bottom: 40px;
+    letter-spacing: 1px;
+}
+
+nav {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+nav a {
+    color: #aab5ca;
+    text-decoration: none;
+    padding: 14px;
+    border-radius: 10px;
+    transition: 0.2s;
+}
+
+nav a:hover, nav a.active {
+    background: #263454;
+    color: white;
+}
+
+.sidebar-bottom {
+    margin-top: auto;
+    color: #68758d;
+    font-size: 12px;
+}
+
+main {
+    flex: 1;
+    padding: 40px;
+    max-width: 1500px;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 35px;
+}
+
+header h1 {
+    font-size: 30px;
+    margin-bottom: 8px;
+}
+
+header p, .card p, .tool-card p {
+    color: #8d9ab2;
+}
+
+.status {
+    color: #7ee0b0;
+    background: #142c2a;
+    padding: 12px 16px;
+    border-radius: 20px;
+    font-size: 13px;
+}
+
+.status-dot {
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    background: #48d597;
+    border-radius: 50%;
+    margin-right: 7px;
+}
+
+.stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    margin-bottom: 25px;
+}
+
+.card, .tool-card {
+    background: #151e32;
+    border: 1px solid #263149;
+    padding: 25px;
+    border-radius: 16px;
+}
+
+.card span {
+    color: #aab5ca;
+}
+
+.card h2 {
+    font-size: 34px;
+    margin: 15px 0;
+    color: #a5b4fc;
+}
+
+.card p {
+    font-size: 13px;
+}
+
+.welcome {
+    background: linear-gradient(120deg, #222e55, #392c61);
+    padding: 35px;
+    border-radius: 18px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 35px;
+}
+
+.tag {
+    color: #a5b4fc;
+    font-size: 11px;
+    letter-spacing: 2px;
+}
+
+.welcome h2 {
+    font-size: 26px;
+    margin: 15px 0;
+}
+
+.welcome p {
+    color: #c1c9dc;
+    line-height: 1.6;
+    max-width: 650px;
+}
+
+.welcome-icon {
+    font-size: 80px;
+    color: #c4b5fd;
+}
+
+.section h2 {
+    margin-bottom: 20px;
+}
+
+.tools {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 18px;
+}
+
+.tool-card {
+    transition: 0.2s;
+}
+
+.tool-card:hover {
+    transform: translateY(-4px);
+    border-color: #7185e9;
+}
+
+.tool-card h3 {
+    margin-bottom: 12px;
+}
+
+.tool-card p {
+    line-height: 1.5;
+}
+
+@media (max-width: 800px) {
+    body {
+        flex-direction: column;
+    }
+
+    .sidebar {
+        width: 100%;
+    }
+
+    .stats, .tools {
+        grid-template-columns: 1fr;
+    }
+
+    main {
+        padding: 20px;
+    }
+
+    header {
+        align-items: flex-start;
+        gap: 15px;
+        flex-direction: column;
+    }
+}
+
+
+
+/* Дополнительные стили страниц */
+
+.hidden {
+    display: none !important;
+}
+
+nav a {
+    cursor: pointer;
+}
+
+.tool-card {
+    cursor: pointer;
+}
+
+.upload-card,
+.result-card {
+    background: #151e32;
+    border: 1px solid #263149;
+    padding: 30px;
+    border-radius: 18px;
+    margin-bottom: 25px;
+}
+
+.upload-card > p {
+    color: #8d9ab2;
+    margin-top: 10px;
+}
+
+.upload-area {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 210px;
+    border: 2px dashed #586b9e;
+    border-radius: 15px;
+    margin: 25px 0;
+    cursor: pointer;
+    background: #10192d;
+    transition: 0.2s;
+    text-align: center;
+}
+
+.upload-area:hover {
+    border-color: #a5b4fc;
+    background: #192541;
+}
+
+.upload-area p {
+    color: #8d9ab2;
+    margin-top: 8px;
+}
+
+.upload-icon {
+    font-size: 38px;
+    color: #a5b4fc;
+    margin-bottom: 12px;
+}
+
+.preview-container {
+    margin: 20px 0;
+    text-align: center;
+}
+
+.preview-container img {
+    max-width: 100%;
+    max-height: 300px;
+    border-radius: 12px;
+    object-fit: contain;
+}
+
+.preview-container p {
+    color: #aab5ca;
+    margin-top: 10px;
+}
+
+#predict-button {
+    background: #6477e8;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    padding: 15px 25px;
+    font-size: 15px;
+    cursor: pointer;
+}
+
+#predict-button:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+
+.loading {
+    color: #a5b4fc;
+    margin-top: 18px;
+}
+
+.error-message {
+    color: #ff8585;
+    margin-top: 15px;
+}
+
+.prediction {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    margin: 25px 0;
+}
+
+.prediction p {
+    color: #8d9ab2;
+    margin-bottom: 8px;
+}
+
+.prediction h1 {
+    color: #a5b4fc;
+    font-size: 28px;
+}
+
+.result-card h3 {
+    margin-bottom: 20px;
+}
+
+.probability-item {
+    margin-bottom: 16px;
+}
+
+.probability-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 7px;
+}
+
+.probability-header span {
+    color: #c4cce0;
+}
+
+.progress-track {
+    height: 9px;
+    background: #28344d;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #6477e8, #a78bfa);
+    border-radius: 10px;
+}
+
+@media (max-width: 800px) {
+    .prediction {
+        grid-template-columns: 1fr;
+    }
+}
+
+
+
+/* MY AI LAB — Projects */
+
+.projects-list {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 18px;
+    margin-top: 25px;
+}
+
+.project-item {
+    background: #10192d;
+    border: 1px solid #263149;
+    border-radius: 14px;
+    padding: 22px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.project-item:hover {
+    transform: translateY(-4px);
+    border-color: #7185e9;
+}
+
+.project-item h3 {
+    color: #a5b4fc;
+    margin-bottom: 10px;
+}
+
+.project-item p {
+    color: #8d9ab2;
+    line-height: 1.5;
+}
+
+.back-button {
+    background: #263454;
+    color: white;
+    border: none;
+    padding: 12px 18px;
+    border-radius: 9px;
+    cursor: pointer;
+    margin-bottom: 25px;
+}
+
+.back-button:hover {
+    background: #394d78;
+}
+
+#detail-title {
+    margin: 18px 0;
+}
+
+#detail-description,
+#detail-result {
+    color: #aab5ca;
+    line-height: 1.7;
+}
+
+@media (max-width: 800px) {
+    .projects-list {
+        grid-template-columns: 1fr;
+    }
+}
+
+
+.project-files-section {
+    margin-top: 30px;
+}
+
+.project-file-item {
+    padding: 16px;
+    margin-top: 12px;
+    border: 1px solid var(--border-color, #ddd);
+    border-radius: 12px;
+}
+
+.project-file-image {
+    display: block;
+    max-width: 100%;
+    max-height: 350px;
+    object-fit: contain;
+    margin: 12px 0;
+    border-radius: 8px;
+}
+
+.download-file-link {
+    display: inline-block;
+    margin-top: 10px;
+}
+
+/* ===== КНОПКА ЗАГРУЗКИ ФАЙЛА ===== */
+
+#upload-project-file-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 9px;
+
+    padding: 12px 24px;
+    margin-top: 14px;
+
+    background: linear-gradient(135deg, #6366f1, #8b5cf6);
+    color: #ffffff;
+
+    border: none;
+    border-radius: 12px;
+
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+
+    box-shadow: 0 4px 14px rgba(99, 102, 241, 0.25);
+    transition: all 0.25s ease;
+}
+
+#upload-project-file-button::before {
+    content: "↑";
+    font-size: 19px;
+    font-weight: 700;
+}
+
+#upload-project-file-button:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: 0 7px 20px rgba(99, 102, 241, 0.4);
+    background: linear-gradient(135deg, #4f46e5, #7c3aed);
+}
+
+#upload-project-file-button:active:not(:disabled) {
+    transform: scale(0.97);
+}
+
+#upload-project-file-button:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+    box-shadow: none;
+}
+
+
+/* ===== КНОПКА УДАЛЕНИЯ ФАЙЛА ===== */
+
+.delete-file-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+
+    padding: 9px 17px;
+    margin-top: 12px;
+
+    background: rgba(239, 68, 68, 0.10);
+    color: #ef4444;
+
+    border: 1px solid rgba(239, 68, 68, 0.35);
+    border-radius: 10px;
+
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+
+    transition: all 0.25s ease;
+}
+
+.delete-file-button::before {
+    content: "🗑";
+    font-size: 14px;
+}
+
+.delete-file-button:hover {
+    background: #ef4444;
+    color: white;
+    border-color: #ef4444;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 14px rgba(239, 68, 68, 0.2);
+}
+
+.delete-file-button:active {
+    transform: scale(0.96);
+}
+
+.delete-file-button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+
+/* ===== ОБЛАСТЬ ВЫБОРА ФАЙЛА ===== */
+
+.upload-area {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+
+    padding: 22px;
+    border: 2px dashed #6366f1;
+    border-radius: 14px;
+
+    background: rgba(99, 102, 241, 0.05);
+    cursor: pointer;
+
+    transition: all 0.25s ease;
+}
+
+.upload-area:hover {
+    background: rgba(99, 102, 241, 0.12);
+    border-color: #8b5cf6;
+    transform: translateY(-2px);
+}
+
+
+/* Кнопка удаления проекта */
+
+.delete-project-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+
+    margin-top: 12px;
+    padding: 9px 16px;
+
+    background: rgba(239, 68, 68, 0.10);
+    color: #ef4444;
+
+    border: 1px solid rgba(239, 68, 68, 0.3);
+    border-radius: 10px;
+
+    font-size: 13px;
+    font-weight: 600;
+
+    cursor: pointer;
+    transition: all 0.25s ease;
+}
+
+.delete-project-button::before {
+    content: "🗑";
+}
+
+.delete-project-button:hover {
+    background: #ef4444;
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 14px rgba(239, 68, 68, 0.2);
+}
+
+.delete-project-button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+
+
+/* Кнопка редактирования */
+
+.edit-project-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 14px;
+    padding: 11px 18px;
+
+    background: rgba(99, 102, 241, 0.12);
+    color: #818cf8;
+
+    border: 1px solid rgba(99, 102, 241, 0.3);
+    border-radius: 10px;
+
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+
+    transition: 0.25s ease;
+}
+
+.edit-project-button:hover {
+    background: #6366f1;
+    color: white;
+    transform: translateY(-2px);
+}
+
+
+/* Затемнение фона */
+
+.edit-project-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    padding: 20px;
+    background: rgba(0, 0, 0, 0.65);
+    backdrop-filter: blur(6px);
+}
+
+
+/* Окно редактирования */
+
+.edit-project-panel {
+    width: 100%;
+    max-width: 480px;
+
+    padding: 28px;
+
+    background: var(--card-bg, #1e1e2d);
+    color: var(--text-color, #ffffff);
+
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 18px;
+
+    box-shadow: 0 20px 60px rgba(0,0,0,0.35);
+
+    animation: editModalAppear 0.25s ease;
+}
+
+.edit-project-panel h2 {
+    margin-top: 0;
+    margin-bottom: 24px;
+}
+
+.edit-project-panel label {
+    display: block;
+    margin: 16px 0 8px;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.edit-project-panel input,
+.edit-project-panel textarea {
+    width: 100%;
+    box-sizing: border-box;
+
+    padding: 12px 14px;
+
+    background: rgba(128,128,128,0.10);
+    color: inherit;
+
+    border: 1px solid rgba(128,128,128,0.3);
+    border-radius: 10px;
+
+    font: inherit;
+    outline: none;
+}
+
+.edit-project-panel input:focus,
+.edit-project-panel textarea:focus {
+    border-color: #6366f1;
+    box-shadow: 0 0 0 3px rgba(99,102,241,0.15);
+}
+
+.edit-project-panel textarea {
+    resize: vertical;
+    min-height: 110px;
+}
+
+.edit-project-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 22px;
+}
+
+.edit-project-actions button {
+    padding: 11px 20px;
+    border-radius: 10px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+.edit-cancel-button {
+    background: transparent;
+    color: inherit;
+    border: 1px solid rgba(128,128,128,0.4);
+}
+
+.edit-save-button {
+    background: #6366f1;
+    color: white;
+    border: none;
+}
+
+.edit-save-button:hover {
+    background: #4f46e5;
+}
+
+.edit-project-actions button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.edit-project-error {
+    color: #ef4444;
+    font-size: 13px;
+}
+
+@keyframes editModalAppear {
+    from {
+        opacity: 0;
+        transform: translateY(12px) scale(0.97);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+
+
+/* =========================================
+   MY AI LAB — DARK PRO DESIGN
+   Кнопки и формы
+========================================= */
+
+/* Основные кнопки добавления */
+#create-project-button,
+#add-code-button,
+.create-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+
+    min-height: 46px;
+    padding: 12px 23px;
+
+    background: linear-gradient(135deg, #6366f1, #8055e8);
+    color: #ffffff;
+
+    border: 1px solid rgba(167, 139, 250, 0.35);
+    border-radius: 12px;
+
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 0.2px;
+
+    cursor: pointer;
+    box-shadow: 0 5px 18px rgba(99, 102, 241, 0.20);
+    transition: all 0.25s ease;
+}
+
+#create-project-button:hover,
+#add-code-button:hover,
+.create-button:hover {
+    transform: translateY(-2px);
+    background: linear-gradient(135deg, #7779ff, #9569f5);
+    box-shadow: 0 8px 25px rgba(99, 102, 241, 0.35);
+}
+
+#create-project-button:active,
+#add-code-button:active,
+.create-button:active {
+    transform: scale(0.97);
+}
+
+/* Расположение кнопок добавления */
+#create-project-button,
+#add-code-button {
+    margin-top: 22px;
+    margin-bottom: 8px;
+}
+
+/* =========================================
+   ФОРМА ДОБАВЛЕНИЯ ПРОГРАММЫ
+========================================= */
+
+#code-form-section {
+    max-width: 1000px;
+    padding: 35px;
+    background: linear-gradient(145deg, #171f35, #121a2d);
+    border: 1px solid #303d5d;
+    border-radius: 20px;
+    box-shadow: 0 15px 45px rgba(0, 0, 0, 0.20);
+    animation: formAppear 0.3s ease;
+}
+
+#code-form-section > h2 {
+    font-size: 25px;
+    margin: 5px 0 28px;
+    color: #eef1ff;
+}
+
+/* Расположение полей */
+#code-form {
+    display: flex;
+    flex-direction: column;
+    gap: 11px;
+}
+
+#code-form label,
+#create-project-form label {
+    color: #c4cde2;
+    font-size: 13px;
+    font-weight: 600;
+    margin-top: 10px;
+}
+
+/* Поля ввода и списки */
+#code-form input,
+#code-form select,
+#code-form textarea,
+#create-project-form input,
+#create-project-form textarea {
+    width: 100%;
+    padding: 14px 16px;
+
+    background: #0d1528;
+    color: #f1f5ff;
+
+    border: 1px solid #303e5e;
+    border-radius: 11px;
+
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s, background 0.2s;
+}
+
+#code-form input,
+#code-form select,
+#create-project-form input {
+    min-height: 48px;
+}
+
+#code-form input::placeholder,
+#code-form textarea::placeholder,
+#create-project-form input::placeholder,
+#create-project-form textarea::placeholder {
+    color: #697894;
+}
+
+/* Подсветка активного поля */
+#code-form input:focus,
+#code-form select:focus,
+#code-form textarea:focus,
+#create-project-form input:focus,
+#create-project-form textarea:focus {
+    border-color: #818cf8;
+    background: #111c34;
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.13);
+}
+
+/* Выпадающие списки */
+#code-form select {
+    cursor: pointer;
+    color-scheme: dark;
+}
+
+#code-form select option {
+    background: #151e32;
+    color: white;
+}
+
+/* Большое поле исходного кода */
+#code-content {
+    min-height: 330px;
+    resize: vertical;
+
+    font-family: Consolas, "Courier New", monospace !important;
+    font-size: 14px !important;
+    line-height: 1.7;
+
+    tab-size: 4;
+}
+
+/* Кнопки формы */
+#code-form .form-buttons,
+#create-project-form .form-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 18px;
+}
+
+#code-form .form-buttons button,
+#create-project-form .form-buttons button {
+    min-width: 155px;
+    margin: 0;
+}
+
+/* Кнопка отмены */
+.back-button {
+    background: #202c46;
+    color: #cbd5e1;
+    border: 1px solid #344361;
+    border-radius: 11px;
+    padding: 12px 19px;
+    font-size: 13px;
+    font-weight: 600;
+    transition: all 0.2s ease;
+}
+
+.back-button:hover {
+    background: #2c3b5c;
+    border-color: #6879a7;
+    transform: translateY(-1px);
+}
+
+/* =========================================
+   ФОРМА СОЗДАНИЯ ПРОЕКТА
+========================================= */
+
+#create-project-form {
+    margin-top: 22px;
+    padding: 25px;
+
+    background: #10192d;
+    border: 1px solid #303d5d;
+    border-radius: 16px;
+
+    animation: formAppear 0.3s ease;
+}
+
+#create-project-form h3 {
+    color: #eef1ff;
+    font-size: 19px;
+    margin-bottom: 18px;
+}
+
+#create-project-form textarea {
+    min-height: 110px;
+    resize: vertical;
+}
+
+/* =========================================
+   АНИМАЦИЯ
+========================================= */
+
+@keyframes formAppear {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* =========================================
+   АДАПТИВНОСТЬ
+========================================= */
+
+@media (max-width: 700px) {
+    #code-form-section {
+        padding: 20px;
+    }
+
+    #code-form .form-buttons,
+    #create-project-form .form-buttons {
+        flex-direction: column;
+    }
+
+    #code-form .form-buttons button,
+    #create-project-form .form-buttons button {
+        width: 100%;
+    }
+
+    #create-project-form {
+        padding: 18px;
+    }
+}
+
+
+
+/* ==========================================
+   MY AI LAB — PREMIUM FORMS DESIGN
+========================================== */
+
+/* Общие панели */
+#code-form-section,
+#project-detail,
+#code-list-section,
+#code-detail-section {
+    background: linear-gradient(145deg, #171f32, #111a2c);
+    border: 1px solid #303e59;
+    border-radius: 20px;
+    padding: 30px;
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.22);
+}
+
+/* Заголовки */
+#code-form-section h2,
+#project-detail h2 {
+    color: #eef2ff;
+    margin: 20px 0;
+    font-size: 24px;
+}
+
+#code-form-section > h2 {
+    padding-bottom: 18px;
+    border-bottom: 1px solid #303e59;
+}
+
+/* Формы */
+#code-form,
+#create-project-form {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+/* Подписи полей */
+#code-form label,
+#create-project-form label {
+    color: #b9c6dc;
+    font-size: 13px;
+    font-weight: 600;
+    margin-top: 12px;
+}
+
+/* Поля ввода */
+#code-form input,
+#code-form select,
+#code-form textarea,
+#create-project-form input,
+#create-project-form textarea {
+    width: 100%;
+    padding: 15px 17px;
+    background: #0b1323;
+    color: #e8edfa;
+    border: 1px solid #35435f;
+    border-radius: 12px;
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+    outline: none;
+    transition: 0.25s ease;
+}
+
+/* Высота обычных полей */
+#code-form input,
+#code-form select,
+#create-project-form input {
+    min-height: 49px;
+}
+
+/* Placeholder */
+#code-form input::placeholder,
+#code-form textarea::placeholder,
+#create-project-form input::placeholder,
+#create-project-form textarea::placeholder {
+    color: #66758e;
+}
+
+/* Подсветка при выборе поля */
+#code-form input:focus,
+#code-form select:focus,
+#code-form textarea:focus,
+#create-project-form input:focus,
+#create-project-form textarea:focus {
+    border-color: #818cf8;
+    background: #111d33;
+    box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.12);
+}
+
+/* Выпадающие списки */
+#code-form select {
+    cursor: pointer;
+    color-scheme: dark;
+}
+
+#code-form select option {
+    background: #111a2c;
+    color: #ffffff;
+}
+
+/* Поле исходного кода */
+#code-content {
+    min-height: 350px;
+    resize: vertical;
+    background: #080f1d !important;
+    color: #dce7ff;
+    border: 1px solid #394968 !important;
+    border-radius: 14px !important;
+    padding: 20px !important;
+    font-family: Consolas, "Courier New", monospace !important;
+    font-size: 14px !important;
+    line-height: 1.8;
+    tab-size: 4;
+}
+
+/* Создание проекта */
+#create-project-form {
+    margin-top: 25px;
+    padding: 27px;
+    background: #111a2c;
+    border: 1px solid #35435f;
+    border-radius: 17px;
+}
+
+#create-project-form h3 {
+    color: #e6ebff;
+    font-size: 19px;
+    margin-bottom: 10px;
+}
+
+#create-project-form textarea {
+    min-height: 120px;
+    resize: vertical;
+}
+
+/* Кнопки */
+#create-project-button,
+#add-code-button,
+#code-form .create-button,
+#create-project-form .create-button {
+    background: linear-gradient(135deg, #6269ed, #8758e8);
+    color: white;
+    border: 1px solid rgba(167, 139, 250, 0.3);
+    border-radius: 11px;
+    padding: 13px 22px;
+    min-height: 46px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.25s ease;
+}
+
+#create-project-button:hover,
+#add-code-button:hover,
+#code-form .create-button:hover,
+#create-project-form .create-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 7px 22px rgba(99, 102, 241, 0.3);
+    filter: brightness(1.12);
+}
+
+/* Кнопки отмены и возврата */
+.back-button {
+    background: #202c43;
+    color: #cbd5e1;
+    border: 1px solid #394967;
+    border-radius: 11px;
+    padding: 12px 19px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+.back-button:hover {
+    background: #2c3d5d;
+    border-color: #7185e9;
+}
+
+/* Расположение кнопок */
+.form-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 20px;
+}
+
+.form-buttons button {
+    min-height: 44px;
+}
+
+/* Зона загрузки файлов проекта */
+#upload-project-file-form .upload-area {
+    min-height: 190px;
+    padding: 30px;
+    margin: 20px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    gap: 9px;
+    background: linear-gradient(145deg, #111d33, #0c1628);
+    border: 2px dashed #586b9e;
+    border-radius: 17px;
+    cursor: pointer;
+    transition: 0.25s ease;
+}
+
+#upload-project-file-form .upload-area:hover {
+    background: #192744;
+    border-color: #929cff;
+    transform: translateY(-2px);
+}
+
+#upload-project-file-form .upload-icon {
+    font-size: 37px;
+    color: #929cff;
+}
+
+#upload-project-file-form .upload-area h3 {
+    color: #e4eaff;
+    font-size: 16px;
+}
+
+#upload-project-file-form .upload-area p {
+    color: #8d9ab2;
+    font-size: 13px;
+}
+
+/* Кнопка загрузки */
+#upload-project-file-button {
+    background: linear-gradient(135deg, #6269ed, #8758e8);
+    color: white;
+    border: none;
+    border-radius: 11px;
+    padding: 13px 23px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+#upload-project-file-button:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 18px rgba(99, 102, 241, 0.3);
+}
+
+#upload-project-file-button:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+
+/* Просмотр исходного кода */
+.code-preview {
+    margin-top: 25px;
+    border: 1px solid #35435f;
+    border-radius: 14px;
+    overflow-x: auto;
+}
+
+/* Адаптивность */
+@media (max-width: 700px) {
+    #code-form-section,
+    #project-detail,
+    #code-list-section,
+    #code-detail-section {
+        padding: 19px;
+    }
+
+    #create-project-form {
+        padding: 18px;
+    }
+
+    .form-buttons {
+        flex-direction: column;
+    }
+
+    .form-buttons button {
+        width: 100%;
+    }
+}
