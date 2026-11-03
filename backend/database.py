@@ -1,14 +1,17 @@
-
 import sqlite3
 from pathlib import Path
 from datetime import datetime
+import os
 
 # Определяем корневую папку проекта
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # Папка для базы данных
-DATA_DIR = BASE_DIR / "data"
-DATA_DIR.mkdir(exist_ok=True)
+DATA_DIR = Path(
+    os.getenv("MY_AI_LAB_DATA_DIR", BASE_DIR / "data")
+)
+
+DATA_DIR.mkdir(parents=True, exist_ok=True)
 
 # Путь к SQLite
 DB_PATH = DATA_DIR / "my_ai_lab.db"

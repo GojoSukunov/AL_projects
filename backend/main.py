@@ -10,6 +10,7 @@ from PIL import Image
 from io import BytesIO
 from datetime import datetime
 import uuid
+import os
 
 import torch
 import numpy as np
@@ -151,9 +152,14 @@ def update_project(project_id: int, project: ProjectCreate):
 BASE_DIR = Path(__file__).resolve().parent.parent
 FRONTEND_DIR = BASE_DIR / "frontend"
 
-# Папка для загруженных изображений
-UPLOAD_DIR = BASE_DIR / "uploads"
-UPLOAD_DIR.mkdir(exist_ok=True)
+# Папка для загруженных изображений и документов
+
+
+UPLOAD_DIR = Path(
+    os.getenv("MY_AI_LAB_UPLOAD_DIR", BASE_DIR / "uploads")
+)
+
+UPLOAD_DIR.mkdir(parents=True, exist_ok=True)
 
 # Разрешённые форматы
 ALLOWED_TYPES = {
