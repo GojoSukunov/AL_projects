@@ -458,7 +458,14 @@ def get_project_files(project_id: int):
             )
 
         files = conn.execute("""
-            SELECT id, project_id, original_name, stored_name, mime_type, created_at
+            SELECT
+                id,
+                project_id,
+                original_name,
+                stored_name,
+                mime_type,
+                created_at,
+                LENGTH(file_data) AS db_size
             FROM files
             WHERE project_id = ?
             ORDER BY created_at DESC
@@ -469,14 +476,15 @@ def get_project_files(project_id: int):
         for item in files:
             file_data = dict(item)
 
-            # Получаем размер файла
+            # Получаем размер файла из базы данных
             file_path = UPLOAD_DIR / item["stored_name"]
 
-            file_data["size"] = (
-                file_path.stat().st_size
-                if file_path.is_file()
-                else 0
-            )
+            if item["db_size"] is not None:
+                file_data["size"] = item["db_size"]
+            elif file_path.is_file():
+                file_data["size"] = file_path.stat().st_size
+            else:
+                file_data["size"] = 0
 
             # Ссылка для скачивания
             file_data["download_url"] = (
@@ -559,16 +567,18 @@ async def upload_project_file(project_id: int, file: UploadFile = File(...)):
                 stored_name,
                 file_path,
                 mime_type,
-                created_at
+                created_at,
+                file_data
             )
-            VALUES (?, ?, ?, ?, ?, ?)
+            VALUES (?, ?, ?, ?, ?, ?, ?)
         """, (
             project_id,
             original_name,
             stored_name,
             f"uploads/{stored_name}",
             mime_type,
-            created_at
+            created_at,
+            contents
         ))
 
         conn.commit()
@@ -605,8 +615,10 @@ def download_project_file(file_id: int):
     return get_project_file_response(file_id, inline=False)
 
 
+
 def get_project_file_response(file_id: int, inline: bool):
     from fastapi.responses import Response
+    from urllib.parse import quote
 
     conn = get_connection()
 
@@ -617,12 +629,34 @@ def get_project_file_response(file_id: int, inline: bool):
         ).fetchone()
 
         if not item:
-            raise HTTPException(status_code=404, detail="Файл не найден")
+            raise HTTPException(
+                status_code=404,
+                detail="Файл не найден"
+            )
 
+        # Сначала получаем файл из базы данных
+        if item["file_data"] is not None:
+            if inline:
+                disposition = "inline"
+            else:
+                disposition = (
+                    f"attachment; filename*=UTF-8''{quote(item['original_name'])}"
+                )
+
+            return Response(
+                content=bytes(item["file_data"]),
+                media_type=item["mime_type"] or "application/octet-stream",
+                headers={"Content-Disposition": disposition}
+            )
+
+        # Если это старый файл, используем локальную папку
         path = UPLOAD_DIR / item["stored_name"]
 
         if not path.is_file():
-            raise HTTPException(status_code=404, detail="Файл отсутствует на диске")
+            raise HTTPException(
+                status_code=404,
+                detail="Файл отсутствует в базе данных и на диске"
+            )
 
         if inline:
             return FileResponse(
@@ -639,7 +673,6 @@ def get_project_file_response(file_id: int, inline: bool):
 
     finally:
         conn.close()
-
 
 # История распознавания CIFAR
 @app.get("/api/cifar/history")
@@ -742,16 +775,18 @@ async def predict_image(file: UploadFile = File(...)):
                     stored_name,
                     file_path,
                     mime_type,
-                    created_at
+                    created_at,
+                    file_data
                 )
-                VALUES (?, ?, ?, ?, ?, ?)
+                VALUES (?, ?, ?, ?, ?, ?, ?)
             """, (
                 project_id,
                 original_name,
                 stored_name,
                 f"uploads/{stored_name}",
                 file.content_type,
-                created_at
+                created_at,
+                contents
             ))
 
             conn.execute("""
@@ -792,7 +827,7 @@ async def predict_image(file: UploadFile = File(...)):
             "results": results,
             "file_id": file_id,
             "filename": original_name,
-            "image_url": f"/uploads/{stored_name}",
+            "image_url": f"/api/files/{file_id}/view",
             "created_at": created_at
         }
 

@@ -102,9 +102,11 @@ def init_db():
                     file_path TEXT NOT NULL,
                     mime_type TEXT,
                     created_at TEXT NOT NULL,
-                    FOREIGN KEY (project_id) REFERENCES projects(id)
+                        file_data BLOB,
+                        FOREIGN KEY (project_id) REFERENCES projects(id)
                         ON DELETE CASCADE
                 );
+                
 
                 CREATE TABLE IF NOT EXISTS predictions (
                     id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -131,7 +133,13 @@ def init_db():
                     FOREIGN KEY (project_id) REFERENCES projects(id)
                         ON DELETE CASCADE
                 );
-            """)
+                        """)
+
+            try:
+                conn.execute("ALTER TABLE files ADD COLUMN file_data BLOB")
+            except sqlite3.OperationalError:
+                pass
+
             _insert_cifar_project(conn)
         print("SQLite database initialized successfully!")
         return
@@ -151,15 +159,22 @@ def init_db():
         """)
 
         conn.execute("""
-            CREATE TABLE IF NOT EXISTS files (
+                CREATE TABLE IF NOT EXISTS files (
+                
                 id BIGSERIAL PRIMARY KEY,
                 project_id BIGINT REFERENCES projects(id) ON DELETE CASCADE,
                 original_name TEXT NOT NULL,
                 stored_name TEXT NOT NULL,
                 file_path TEXT NOT NULL,
                 mime_type TEXT,
-                created_at TEXT NOT NULL
+                created_at TEXT NOT NULL,
+                file_data BYTEA
             )
+        
+        """)
+        conn.execute("""
+            ALTER TABLE files
+            ADD COLUMN IF NOT EXISTS file_data BYTEA
         """)
 
         conn.execute("""
