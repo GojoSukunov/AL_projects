@@ -90,7 +90,8 @@ const predictButton = document.getElementById("predict-button");
 
 let selectedFile = null;
 
-imageInput.addEventListener("change", () => {
+if (imageInput) {
+    imageInput.addEventListener("change", () => {
     const file = imageInput.files[0];
 
     document.getElementById("error-message").classList.add("hidden");
@@ -125,11 +126,13 @@ imageInput.addEventListener("change", () => {
     previewContainer.classList.remove("hidden");
     predictButton.disabled = false;
 });
+}
 
 
 // Отправка изображения на backend
 
-predictButton.addEventListener("click", async () => {
+if (predictButton) {
+    predictButton.addEventListener("click", async () => {
     if (!selectedFile) return;
 
     const formData = new FormData();
@@ -198,6 +201,7 @@ predictButton.addEventListener("click", async () => {
         predictButton.disabled = false;
     }
 });
+}
 
 
 function showError(message) {
@@ -905,12 +909,49 @@ details.textContent =
 }
 
 
+
 // ======================================
 // MY AI LAB — CODE STUDIO
 // ======================================
 
 let currentCodeId = null;
 let currentCode = null;
+
+// Открытие формы добавления программы
+const addCodeButton = document.getElementById("add-code-button");
+
+if (addCodeButton) {
+    addCodeButton.addEventListener("click", async () => {
+        const error = document.getElementById("code-form-error");
+
+        try {
+            currentCodeId = null;
+            currentCode = null;
+
+            document.getElementById("code-form").reset();
+
+            document.getElementById("code-form-title").textContent =
+                "Новая программа";
+
+            error.classList.add("hidden");
+
+            await loadCodeProjects();
+
+            document.getElementById("code-list-section").classList.add("hidden");
+            document.getElementById("code-detail-section").classList.add("hidden");
+            document.getElementById("code-form-section").classList.remove("hidden");
+
+            document.getElementById("code-content").focus();
+
+        } catch (err) {
+            error.textContent = err.message;
+            error.classList.remove("hidden");
+        }
+    });
+} else {
+    console.error("Кнопка add-code-button не найдена");
+}
+
 
 
 // Загрузка всех программ
