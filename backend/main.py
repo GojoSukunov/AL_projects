@@ -203,7 +203,7 @@ def get_status():
     return {
         "status": "online",
         "name": "MY AI LAB",
-        "database": "SQLite"
+        "database": "PostgreSQL" if os.getenv("DATABASE_URL") else "SQLite"
     }
 
 
